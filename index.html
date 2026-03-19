@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Covenant - Control Inteligente</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #05070A;
+      color: #E8E8E8;
+    }
+    
+    .gold-gradient {
+      background: linear-gradient(135deg, #F6E7B2 0%, #C8A75B 50%, #8E6B2F 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .gold-btn {
+      background: linear-gradient(180deg, #DDC181 0%, #A9843F 100%);
+      color: #08101A;
+    }
+    
+    .gold-btn:hover {
+      opacity: 0.9;
+    }
+    
+    .input-field {
+      background: #0D111A;
+      border: 1px solid rgba(255,255,255,0.1);
+      color: white;
+      transition: border-color 0.3s;
+    }
+    
+    .input-field:focus {
+      outline: none;
+      border-color: #C8A75B;
+    }
+    
+    .input-field::placeholder {
+      color: rgba(255,255,255,0.2);
+    }
+    
+    .bg-grid {
+      background-image: linear-gradient(rgba(255,255,255,0.01) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.01) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .animate-float {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-grid">
+  <!-- Background Glow -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[800px] bg-[radial-gradient(circle_at_center,_rgba(200,167,91,0.08)_0%,_transparent_70%)]" />
+  </div>
+
+  <div class="relative z-10 max-w-lg mx-auto px-6 py-12 md:py-20">
+    <!-- Logo -->
+    <div class="text-center mb-10">
+      <div class="inline-flex items-center gap-3 mb-4">
+        <svg viewBox="0 0 100 100" fill="none" class="h-14 w-14 animate-float">
+          <defs>
+            <linearGradient id="covenant-gold" x1="20" y1="20" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#F6E7B2" />
+              <stop offset="50%" stop-color="#C8A75B" />
+              <stop offset="100%" stop-color="#8E6B2F" />
+            </linearGradient>
+          </defs>
+          <path d="M30 25L50 15L80 32V42L50 25L22 40V60L50 75L80 58V68L50 85L18 68V32L30 25Z" fill="url(#covenant-gold)" />
+          <rect x="36" y="52" width="5" height="12" rx="0.5" fill="url(#covenant-gold)" />
+          <rect x="45" y="45" width="5" height="19" rx="0.5" fill="url(#covenant-gold)" />
+          <rect x="54" y="38" width="5" height="26" rx="0.5" fill="url(#covenant-gold)" />
+          <path d="M36 58L65 30H55V25H75V45H70V35L41 63L36 58Z" fill="url(#covenant-gold)" />
+        </svg>
+        <div class="flex flex-col">
+          <span class="text-2xl font-black tracking-[0.3em] uppercase text-white leading-none">COVENANT</span>
+          <span class="text-[8px] text-[#C8A75B] tracking-[0.4em] uppercase font-bold">Control Inteligente</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero Text -->
+    <div class="text-center mb-10">
+      <h1 class="text-3xl md:text-4xl font-bold text-white mb-3">
+        Â¿Listo para transformar<br/><span class="gold-gradient">tu operaciÃ³n?</span>
+      </h1>
+      <p class="text-[#B9C0CC] text-lg">
+        DejÃ¡ de perder tiempo en tareas repetitivas. Implementamos automatizaciÃ³n inteligente para escalar tu negocio.
+      </p>
+    </div>
+
+    <!-- Benefits -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+      <div class="bg-[#0D111A]/80 border border-white/5 rounded-xl p-4 text-center">
+        <div class="text-2xl mb-2">âš¡</div>
+        <p class="text-xs text-[#B9C0CC] uppercase tracking-wider">AutomatizaciÃ³n</p>
+      </div>
+      <div class="bg-[#0D111A]/80 border border-white/5 rounded-xl p-4 text-center">
+        <div class="text-2xl mb-2">ðŸ“Š</div>
+        <p class="text-xs text-[#B9C0CC] uppercase tracking-wider">Dashboard en vivo</p>
+      </div>
+      <div class="bg-[#0D111A]/80 border border-white/5 rounded-xl p-4 text-center">
+        <div class="text-2xl mb-2">ðŸ¤–</div>
+        <p class="text-xs text-[#B9C0CC] uppercase tracking-wider">IA EstratÃ©gica</p>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <form id="leadForm" class="space-y-5">
+      <div>
+        <label class="block text-[10px] uppercase tracking-[0.3em] text-[#C8A75B] font-bold mb-2">Nombre completo</label>
+        <input type="text" name="nombre" required
+          class="w-full rounded-lg px-4 py-3 input-field"
+          placeholder="Juan PÃ©rez">
+      </div>
+
+      <div>
+        <label class="block text-[10px] uppercase tracking-[0.3em] text-[#C8A75B] font-bold mb-2">Empresa</label>
+        <input type="text" name="empresa" required
+          class="w-full rounded-lg px-4 py-3 input-field"
+          placeholder="Nombre de tu empresa">
+      </div>
+
+      <div>
+        <label class="block text-[10px] uppercase tracking-[0.3em] text-[#C8A75B] font-bold mb-2">Email profesional</label>
+        <input type="email" name="email" required
+          class="w-full rounded-lg px-4 py-3 input-field"
+          placeholder="juan@empresa.com">
+      </div>
+
+      <div>
+        <label class="block text-[10px] uppercase tracking-[0.3em] text-[#C8A75B] font-bold mb-2">Â¿CuÃ¡l es tu desafÃ­o principal?</label>
+        <select name="problema" required class="w-full rounded-lg px-4 py-3 input-field">
+          <option value="" class="text-white/20">SeleccionÃ¡ una opciÃ³n...</option>
+          <option value="automatizacion" class="text-white">Automatizar procesos repetitivos</option>
+          <option value="dashboard" class="text-white">Centralizar datos y mÃ©tricas</option>
+          <option value="ia" class="text-white">Implementar IA en mi negocio</option>
+          <option value="crm" class="text-white">Gestionar clientes y leads</option>
+          <option value="otro" class="text-white">Otro</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-[10px] uppercase tracking-[0.3em] text-[#C8A75B] font-bold mb-2">CuÃ©ntanos mÃ¡s (opcional)</label>
+        <textarea name="mensaje" rows="3"
+          class="w-full rounded-lg px-4 py-3 input-field resize-none"
+          placeholder="Detalles sobre tu desafÃ­o..."></textarea>
+      </div>
+
+      <button type="submit" id="submitBtn"
+        class="w-full py-4 gold-btn font-black text-xs uppercase tracking-[0.4em] flex items-center justify-center gap-3 rounded-lg">
+        <span>Agendar DiagnÃ³stico Gratis</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </button>
+
+      <p class="text-[10px] text-center text-white/30 uppercase tracking-widest">
+        ðŸŽ¯ DiagnÃ³stico sin costo â€¢ Respuesta en 24h
+      </p>
+    </form>
+
+    <!-- Success Message -->
+    <div id="success" class="hidden text-center py-10">
+      <div class="text-6xl mb-6">ðŸŽ¯</div>
+      <h3 class="text-3xl font-bold text-white mb-4">Â¡Recibido!</h3>
+      <p class="text-[#B9C0CC] mb-6">Gracias por tu interÃ©s. Nuestro equipo te contactarÃ¡ en las prÃ³ximas 24 horas.</p>
+      <div class="bg-[#0D111A] border border-[#C8A75B]/20 rounded-xl p-4">
+        <p class="text-xs text-[#C8A75B] uppercase tracking-wider mb-2">Â¿QuÃ© sigue?</p>
+        <p class="text-sm text-white/70">1. AnÃ¡lisis de tu situaciÃ³n</p>
+        <p class="text-sm text-white/70">2. Propuesta personalizada</p>
+        <p class="text-sm text-white/70">3. ImplementaciÃ³n</p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="mt-12 pt-8 border-t border-white/5 text-center">
+      <p class="text-[10px] text-white/30 uppercase tracking-widest">
+        Â© 2026 Covenant Strategic Architecture
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const WEBHOOK_URL = 'https://webhook.site/'; // REEMPLAZAR ESTO
+
+    document.getElementById('leadForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="animate-pulse">Enviando...</span>';
+      
+      const formData = new FormData(e.target);
+      const data = {
+        nombre: formData.get('nombre'),
+        empresa: formData.get('empresa'),
+        email: formData.get('email'),
+        problema: formData.get('problema'),
+        mensaje: formData.get('mensaje'),
+        source: 'covenant-landing',
+        timestamp: new Date().toISOString()
+      };
+
+      console.log('Lead capturado:', data);
+
+      // Enviar a webhook
+      try {
+        await fetch(WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        console.log('Enviado a webhook');
+      } catch (error) {
+        console.log('Webhook no configurado -', error.message);
+      }
+
+      // Mostrar Ã©xito
+      document.getElementById('leadForm').classList.add('hidden');
+      document.getElementById('success').classList.remove('hidden');
+    });
+  </script>
+</body>
+</html>
