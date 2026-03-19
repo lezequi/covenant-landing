@@ -4,232 +4,189 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Covenant - Control Inteligente</title>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #05070A;
-      color: #E8E8E8;
-    }
-    
-    .gold-gradient {
-      background: linear-gradient(135deg, #F6E7B2 0%, #C8A75B 50%, #8E6B2F 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    
-    .gold-btn {
-      background: linear-gradient(180deg, #DDC181 0%, #A9843F 100%);
-      color: #08101A;
-    }
-    
-    .gold-btn:hover {
-      opacity: 0.9;
-    }
-    
-    .input-field {
-      background: #0D111A;
-      border: 1px solid rgba(255,255,255,0.1);
-      color: white;
-      transition: border-color 0.3s;
-    }
-    
-    .input-field:focus {
-      outline: none;
-      border-color: #C8A75B;
-    }
-    
-    .input-field::placeholder {
-      color: rgba(255,255,255,0.2);
-    }
-    
-    .bg-grid {
-      background-image: linear-gradient(rgba(255,255,255,0.01) 1px, transparent 1px),
-                        linear-gradient(90deg, rgba(255,255,255,0.01) 1px, transparent 1px);
-      background-size: 60px 60px;
-    }
-
-    .animate-float {
-      animation: float 6s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-    }
+    body { font-family: 'Inter', sans-serif; background: #05070A; color: #E8E8E8; }
+    .gold-gradient { background: linear-gradient(135deg, #F6E7B2 0%, #C8A75B 50%, #8E6B2F 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .gold-btn { background: linear-gradient(180deg, #DDC181 0%, #A9843F 100%); color: #08101A; }
+    .gold-btn:hover { opacity: 0.9; }
+    .bg-grid { background-image: linear-gradient(rgba(255,255,255,0.01) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.01) 1px, transparent 1px); background-size: 60px 60px; }
+    @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+    .animate-float { animation: float 6s ease-in-out infinite; }
+    .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
   </style>
 </head>
-<body class="min-h-screen bg-grid">
-  <!-- Background Glow -->
-  <div class="fixed inset-0 overflow-hidden pointer-events-none">
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[800px] bg-[radial-gradient(circle_at_center,_rgba(200,167,91,0.08)_0%,_transparent_70%)]" />
-  </div>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState, useEffect } = React;
 
-  <div class="relative z-10 max-w-lg mx-auto px-6 py-12 md:py-20">
-    <!-- Logo -->
-    <div class="text-center mb-10">
-      <div class="inline-flex items-center gap-3 mb-4">
-        <svg viewBox="0 0 100 100" fill="none" class="h-14 w-14 animate-float">
-          <defs>
-            <linearGradient id="covenant-gold" x1="20" y1="20" x2="80" y2="80" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stop-color="#F6E7B2" />
-              <stop offset="50%" stop-color="#C8A75B" />
-              <stop offset="100%" stop-color="#8E6B2F" />
-            </linearGradient>
-          </defs>
-          <path d="M30 25L50 15L80 32V42L50 25L22 40V60L50 75L80 58V68L50 85L18 68V32L30 25Z" fill="url(#covenant-gold)" />
-          <rect x="36" y="52" width="5" height="12" rx="0.5" fill="url(#covenant-gold)" />
-          <rect x="45" y="45" width="5" height="19" rx="0.5" fill="url(#covenant-gold)" />
-          <rect x="54" y="38" width="5" height="26" rx="0.5" fill="url(#covenant-gold)" />
-          <path d="M36 58L65 30H55V25H75V45H70V35L41 63L36 58Z" fill="url(#covenant-gold)" />
-        </svg>
-        <div class="flex flex-col">
-          <span class="text-2xl font-black tracking-[0.3em] uppercase text-white leading-none">COVENANT</span>
-          <span class="text-[8px] text-[#C8A75B] tracking-[0.4em] uppercase font-bold">Control Inteligente</span>
-        </div>
-      </div>
-    </div>
+    // --- LOGO ---
+    const CovenantLogo = ({ className = "h-12 w-12" }) => (
+     <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+       <defs>
+         <linearGradient id="covenant-gold" x1="20" y1="20" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+           <stop offset="0%" stopColor="#F6E7B2" />
+           <stop offset="50%" stopColor="#C8A75B" />
+           <stop offset="100%" stopColor="#8E6B2F" />
+         </linearGradient>
+       </defs>
+       <path d="M30 25L50 15L80 32V42L50 25L22 40V60L50 75L80 58V68L50 85L18 68V32L30 25Z" fill="url(#covenant-gold)" />
+       <rect x="36" y="52" width="5" height="12" rx="0.5" fill="url(#covenant-gold)" />
+       <rect x="45" y="45" width="5" height="19" rx="0.5" fill="url(#covenant-gold)" />
+       <rect x="54" y="38" width="5" height="26" rx="0.5" fill="url(#covenant-gold)" />
+       <path d="M36 58L65 30H55V25H75V45H70V35L41 63L36 58Z" fill="url(#covenant-gold)" />
+     </svg>
+    );
 
-    <!-- Hero Text -->
-    <div class="text-center mb-10">
-      <h1 class="text-3xl md:text-4xl font-bold text-white mb-3">
-        ¿Listo para transformar<br/><span class="gold-gradient">tu operación?</span>
-      </h1>
-      <p class="text-[#B9C0CC] text-lg">
-        Dejá de perder tiempo en tareas repetitivas. Implementamos automatización inteligente para escalar tu negocio.
-      </p>
-    </div>
+    // --- DASHBOARD ---
+    const LiveDashboard = () => {
+     const [cashflow, setCashflow] = useState(14250000);
+     const [alerts, setAlerts] = useState(1);
+     const [efficiency, setEfficiency] = useState(94.2);
+     const [points, setPoints] = useState([40, 60, 45, 70, 65, 80, 75, 90, 85, 95]);
+     const [aiLog, setAiLog] = useState("Inicializando Control OS...");
+     
+     const aiMessages = [
+       "Sincronizando flujos de caja...",
+       "Optimización operativa detectada: +12.4%",
+       "Escaneando arquitectura de datos...",
+       "IA: Generando insight de tesorería",
+       "Integridad del sistema: 100% segura",
+       "Analizando KPI comercial trimestral"
+     ];
 
-    <!-- Benefits -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
-      <div class="bg-[#0D111A]/80 border border-white/5 rounded-xl p-4 text-center">
-        <div class="text-2xl mb-2">⚡</div>
-        <p class="text-xs text-[#B9C0CC] uppercase tracking-wider">Automatización</p>
-      </div>
-      <div class="bg-[#0D111A]/80 border border-white/5 rounded-xl p-4 text-center">
-        <div class="text-2xl mb-2">📊</div>
-        <p class="text-xs text-[#B9C0CC] uppercase tracking-wider">Dashboard en vivo</p>
-      </div>
-      <div class="bg-[#0D111A]/80 border border-white/5 rounded-xl p-4 text-center">
-        <div class="text-2xl mb-2">🤖</div>
-        <p class="text-xs text-[#B9C0CC] uppercase tracking-wider">IA Estratégica</p>
-      </div>
-    </div>
+     useEffect(() => {
+       const interval = setInterval(() => {
+         setCashflow(prev => prev + (Math.random() * 30000 - 10000));
+         setEfficiency(prev => Math.min(99.9, Math.max(92, prev + (Math.random() * 0.2 - 0.1))));
+         setAlerts(Math.floor(Math.random() * 2));
+         setPoints(prev => [...prev.slice(1), 50 + Math.random() * 45]);
+         setAiLog(aiMessages[Math.floor(Math.random() * aiMessages.length)]);
+       }, 3000);
+       return () => clearInterval(interval);
+     }, []);
 
-    <!-- Form -->
-    <form id="leadForm" class="space-y-5">
-      <div>
-        <label class="block text-[10px] uppercase tracking-[0.3em] text-[#C8A75B] font-bold mb-2">Nombre completo</label>
-        <input type="text" name="nombre" required
-          class="w-full rounded-lg px-4 py-3 input-field"
-          placeholder="Juan Pérez">
-      </div>
+     return (
+       <div className="relative group">
+         <div className="absolute -top-4 -left-4 w-10 h-10 border-l-2 border-t-2 border-[#C8A75B]/30" />
+         <div className="absolute -bottom-4 -right-4 w-10 h-10 border-r-2 border-b-2 border-[#C8A75B]/30" />
+         <div className="relative bg-[#080B12]/95 backdrop-blur-3xl border border-white/10 rounded-[40px] overflow-hidden shadow-2xl">
+           <div className="border-b border-white/5 bg-[#0D111A] px-8 py-6 flex justify-between items-center">
+             <div className="flex items-center gap-4">
+               <CovenantLogo className="h-10 w-10 animate-pulse" />
+               <div>
+                 <div className="flex items-center gap-2">
+                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
+                   <span className="text-[10px] uppercase tracking-[0.4em] text-[#C8A75B] font-black">Control OS v4.0</span>
+                 </div>
+                 <h3 className="text-xs font-bold text-white tracking-widest mt-1 uppercase opacity-80">Live Engine</h3>
+               </div>
+             </div>
+             <div className="hidden sm:block text-[9px] font-mono text-[#B8C0CF] opacity-30 tracking-widest uppercase">Encrypted Instance: CV-ALPHA</div>
+           </div>
+           <div className="p-8 space-y-6">
+             <div className="bg-[#0D111A] border border-white/5 rounded-3xl p-6">
+               <div className="flex justify-between items-end mb-6">
+                 <div>
+                   <p className="text-[10px] uppercase tracking-[0.2em] text-[#B8C0CF] font-bold">Caja Proyectada</p>
+                   <h4 className="text-3xl font-bold text-white tracking-tighter mt-1">${(cashflow / 1000000).toFixed(2)}M</h4>
+                 </div>
+                 <span className="text-xs text-emerald-400 font-bold bg-emerald-500/10 px-2 py-1 rounded">+18.4%</span>
+               </div>
+               <div className="flex items-end gap-1.5 h-16">
+                 {points.map((h, i) => (
+                   <div key={i} className="flex-1 bg-gradient-to-t from-[#C8A75B]/5 to-[#C8A75B] rounded-sm transition-all duration-1000" style={{ height: `${h}%`, opacity: 0.3 + (i * 0.07) }} />
+                 ))}
+               </div>
+             </div>
+             <div className="grid grid-cols-2 gap-4">
+               <div className={`bg-[#0D111A] border rounded-2xl p-5 ${alerts > 0 ? 'border-amber-500/40' : 'border-white/5'}`}>
+                 <div className={`w-5 h-5 mb-2 ${alerts > 0 ? 'text-amber-500' : 'text-gray-600'}`}>⚠️</div>
+                 <p className="text-[10px] uppercase tracking-widest text-[#B8C0CF] font-bold">Alertas</p>
+                 <p className="text-xl font-bold text-white mt-1">0{alerts}</p>
+               </div>
+               <div className="bg-[#0D111A] border border-white/5 rounded-2xl p-5">
+                 <div className="w-5 h-5 mb-2 text-blue-500">🎯</div>
+                 <p className="text-[10px] uppercase tracking-widest text-[#B8C0CF] font-bold">Eficiencia</p>
+                 <p className="text-xl font-bold text-white mt-1">{efficiency.toFixed(1)}%</p>
+               </div>
+             </div>
+             <div className="bg-[#05070A] border border-[#C8A75B]/20 rounded-xl p-4 flex items-center gap-4">
+               <span className="text-[#C8A75B]">▶</span>
+               <p className="text-[11px] font-mono text-[#B8C0CF] truncate italic">{"> "} {aiLog}</p>
+             </div>
+           </div>
+         </div>
+       </div>
+     );
+    };
 
-      <div>
-        <label class="block text-[10px] uppercase tracking-[0.3em] text-[#C8A75B] font-bold mb-2">Empresa</label>
-        <input type="text" name="empresa" required
-          class="w-full rounded-lg px-4 py-3 input-field"
-          placeholder="Nombre de tu empresa">
-      </div>
+    // --- APP ---
+    const App = () => {
+     return (
+       <div className="min-h-screen bg-[#05070A] text-[#E8E8E8] font-sans">
+         <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[800px] bg-[radial-gradient(circle_at_center,_rgba(200,167,91,0.06)_0%,_transparent_75%)]" />
+           <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:60px_60px] opacity-40" />
+         </div>
 
-      <div>
-        <label class="block text-[10px] uppercase tracking-[0.3em] text-[#C8A75B] font-bold mb-2">Email profesional</label>
-        <input type="email" name="email" required
-          class="w-full rounded-lg px-4 py-3 input-field"
-          placeholder="juan@empresa.com">
-      </div>
+         <nav className="fixed top-0 w-full z-50 py-10 bg-transparent">
+           <div className="max-w-7xl mx-auto px-8 flex items-center justify-between">
+             <div className="flex items-center gap-5">
+               <CovenantLogo className="h-14 w-14" />
+               <div className="flex flex-col">
+                 <span className="text-3xl font-black tracking-[0.3em] uppercase text-white leading-none">Covenant</span>
+                 <span className="text-[10px] text-[#C8A75B] tracking-[0.4em] uppercase mt-2 font-bold">Control Inteligente</span>
+               </div>
+             </div>
+           </div>
+         </nav>
 
-      <div>
-        <label class="block text-[10px] uppercase tracking-[0.3em] text-[#C8A75B] font-bold mb-2">¿Cuál es tu desafío principal?</label>
-        <select name="problema" required class="w-full rounded-lg px-4 py-3 input-field">
-          <option value="" class="text-white/20">Seleccioná una opción...</option>
-          <option value="automatizacion" class="text-white">Automatizar procesos repetitivos</option>
-          <option value="dashboard" class="text-white">Centralizar datos y métricas</option>
-          <option value="ia" class="text-white">Implementar IA en mi negocio</option>
-          <option value="crm" class="text-white">Gestionar clientes y leads</option>
-          <option value="otro" class="text-white">Otro</option>
-        </select>
-      </div>
+         <main className="relative z-10 pt-60 px-8">
+           <section className="max-w-7xl mx-auto grid lg:grid-cols-[1fr_0.8fr] gap-20 items-center">
+             <div className="space-y-12">
+               <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-[#C8A75B]/30 bg-[#0B1424]/60 text-[10px] uppercase tracking-[0.3em] text-[#D4B670] font-black">
+                 🚀 Strategic Architecture 4.0
+               </div>
+               <h1 className="text-7xl md:text-9xl font-bold leading-[0.85] tracking-tighter text-white">
+                 Control<br />
+                 <span className="bg-gradient-to-r from-[#F6E7B2] via-[#C8A75B] to-[#8E6B2F] bg-clip-text text-transparent italic">Soberano.</span>
+               </h1>
+               <p className="text-2xl text-[#B9C0CC] max-w-2xl leading-relaxed font-light">
+                 Transformamos el caos operativo en una <span className="text-white font-bold underline decoration-[#C8A75B] decoration-4 underline-offset-8">cabina de mando</span> estratégica diseñada para la alta dirección.
+               </p>
+               <button className="px-12 py-6 rounded-sm bg-gradient-to-b from-[#DDC181] to-[#A9843F] text-[#08101A] font-black text-xs uppercase tracking-[0.4em]">Agendar Diagnóstico →</button>
+             </div>
+             <div className="w-full"><LiveDashboard /></div>
+           </section>
 
-      <div>
-        <label class="block text-[10px] uppercase tracking-[0.3em] text-[#C8A75B] font-bold mb-2">Cuéntanos más (opcional)</label>
-        <textarea name="mensaje" rows="3"
-          class="w-full rounded-lg px-4 py-3 input-field resize-none"
-          placeholder="Detalles sobre tu desafío..."></textarea>
-      </div>
+           <section className="py-40 text-center">
+             <h2 className="text-4xl md:text-7xl font-bold text-white mb-10">Usted no puede escalar lo que no puede <span className="text-[#C8A75B]">ver.</span></h2>
+             <p className="text-xl text-[#B9C0CC] max-w-4xl mx-auto">Eliminamos la incertidumbre instalando una arquitectura técnica que centraliza datos, automatiza flujos y empodera su capacidad de decisión.</p>
+           </section>
 
-      <button type="submit" id="submitBtn"
-        class="w-full py-4 gold-btn font-black text-xs uppercase tracking-[0.4em] flex items-center justify-center gap-3 rounded-lg">
-        <span>Agendar Diagnóstico Gratis</span>
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-      </button>
+           <footer className="py-20 border-t border-white/5 text-center">
+             <div className="flex items-center justify-center gap-4 mb-4">
+               <CovenantLogo className="h-10 w-10" />
+               <div className="flex flex-col">
+                 <span className="text-sm font-black tracking-[0.4em] uppercase text-white">Covenant</span>
+                 <span className="text-[8px] text-[#A7AFBF] tracking-[0.5em] uppercase opacity-60">Control Inteligente</span>
+               </div>
+             </div>
+             <p className="text-[#A7AFBF] text-[10px] uppercase tracking-widest opacity-40">© 2026 Covenant Strategic Architecture.</p>
+           </footer>
+         </main>
+       </div>
+     );
+    };
 
-      <p class="text-[10px] text-center text-white/30 uppercase tracking-widest">
-        🎯 Diagnóstico sin costo • Respuesta en 24h
-      </p>
-    </form>
-
-    <!-- Success Message -->
-    <div id="success" class="hidden text-center py-10">
-      <div class="text-6xl mb-6">🎯</div>
-      <h3 class="text-3xl font-bold text-white mb-4">¡Recibido!</h3>
-      <p class="text-[#B9C0CC] mb-6">Gracias por tu interés. Nuestro equipo te contactará en las próximas 24 horas.</p>
-      <div class="bg-[#0D111A] border border-[#C8A75B]/20 rounded-xl p-4">
-        <p class="text-xs text-[#C8A75B] uppercase tracking-wider mb-2">¿Qué sigue?</p>
-        <p class="text-sm text-white/70">1. Análisis de tu situación</p>
-        <p class="text-sm text-white/70">2. Propuesta personalizada</p>
-        <p class="text-sm text-white/70">3. Implementación</p>
-      </div>
-    </div>
-
-    <!-- Footer -->
-    <div class="mt-12 pt-8 border-t border-white/5 text-center">
-      <p class="text-[10px] text-white/30 uppercase tracking-widest">
-        © 2026 Covenant Strategic Architecture
-      </p>
-    </div>
-  </div>
-
-  <script>
-    const WEBHOOK_URL = 'https://webhook.site/'; // REEMPLAZAR ESTO
-
-    document.getElementById('leadForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      const btn = document.getElementById('submitBtn');
-      btn.disabled = true;
-      btn.innerHTML = '<span class="animate-pulse">Enviando...</span>';
-      
-      const formData = new FormData(e.target);
-      const data = {
-        nombre: formData.get('nombre'),
-        empresa: formData.get('empresa'),
-        email: formData.get('email'),
-        problema: formData.get('problema'),
-        mensaje: formData.get('mensaje'),
-        source: 'covenant-landing',
-        timestamp: new Date().toISOString()
-      };
-
-      console.log('Lead capturado:', data);
-
-      // Enviar a webhook
-      try {
-        await fetch(WEBHOOK_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
-        console.log('Enviado a webhook');
-      } catch (error) {
-        console.log('Webhook no configurado -', error.message);
-      }
-
-      // Mostrar éxito
-      document.getElementById('leadForm').classList.add('hidden');
-      document.getElementById('success').classList.remove('hidden');
-    });
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
   </script>
 </body>
 </html>
